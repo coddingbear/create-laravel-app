@@ -13,8 +13,22 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return __METHOD__ . '은(는) Article 컬렉션을 조회합니다.';
+        //return __METHOD__ . '은(는) Article 컬렉션을 조회합니다.';
+		//$articles = \App\Article::get(); // N+1쿼리 발생
 		
+		// N+1 쿼리  문제 해결 with()메서드 사용
+		//$articles = \App\Article::with('user')->get(); 
+		
+		// 지연 로드 (Lazy load)
+		//$articles = \App\Article::get();
+		/* user() 와 관계 없는 다른 로직 수행 */
+		//$articles->load('user');
+		
+		//페이지네이터
+		$articles = \App\Article::latest()->paginate(5); 
+		// latest() 날자를 역순으로 정렬, orderBy('created_at', 'desc;)와 같다.
+		$articles->load('user');
+		return view('articles.index', compact('articles'));
     }
 
     /**
