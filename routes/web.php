@@ -10,33 +10,26 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//code: 기본 라우팅
+// code: 뷰 반환
 // Route::get('/', function () {
-// 	return view('welcome');
+// 	return view('errors.503');
 // });
 
-// code: 라우팅에 대한 문자열 반환
+// code: with() 메서드 이용한 데이터 바인딩
 // Route::get('/', function () {
-//     return '<h1>Hello Foo</h1>';
+// 	return view('welcome')->with('name', 'Hong, Gildong');
+// });
+// Route::get('/', function () {
+// 	return view('welcome')->with([
+// 		'name' =>'홍길동',
+// 		'greeting' => '안녕하세요?'
+// 	]);
 // });
 
-// code: URL 파라미터 패턴
-// Route::pattern('foo', '[0-9a-zA-Z]{3}'); // 정규표현식으로 URL 파라미터 패턴을 강제
-// Route::get('/{foo?}', function($foo ='bar') {
-//     return $foo;
-// });
-
-// Route::get('/{foo?}', function ($foo = 'bar') {
-// 	return $foo;
-// })->where('foo', '[0-9a-zA-Z]{4}'); // where() 메서드 체인
-
-// code: 라우트 이름
-Route::get('/', [
-	'as' => 'home',
-	function () {
-		return '제이름은 "home" 입니다.';
-	}
-]);
-Route::get('/home', function () {
-	return redirect(route('home'));
+// code: view() 함수 이용 방법
+Route::get('/', function () {
+	return view('welcome', [
+		'name' =>'김춘추',
+		'greeting' => '안녕하세요?'
+	]);
 });
