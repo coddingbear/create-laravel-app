@@ -26,12 +26,8 @@
 // 	]);
 // });
 
-// code: view() 함수 이용 방법
-Route::get('/', function () {
-	$items = ['apple', 'banana', 'peach'];
-	return view('welcome', [
-		'name' =>'김춘추',
-		'greeting' => '안녕하세요?',
-		'items'=> $items
-	]);
-});
+// code: 컨트롤러 사용
+Route::get('/', 'WelcomeController@index');
+
+// code: RESTful 리소스 컨트롤러 사용
+Route::resource('articles', 'ArticlesController');

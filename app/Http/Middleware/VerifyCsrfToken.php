@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        //테스트를 위해 보호기능 제외 URL
+		'articles',
+		'articles/'
     ];
 }
