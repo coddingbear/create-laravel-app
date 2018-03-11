@@ -31,3 +31,45 @@ Route::get('/', 'WelcomeController@index');
 
 // code: RESTful 리소스 컨트롤러 사용
 Route::resource('articles', 'ArticlesController');
+
+// code: 라우팅 파일만으로 사용자 인증 구현
+Route::get('auth/login', function () {
+	$credentials = [
+		'email' => 'john@example.com',
+		'password' => '112233'
+	];
+	
+	if(! auth()->attempt($credentials)) {
+		return '로그인 정보가 정확하지 않습니다.';
+	}
+	return redirect('protected');
+//})->name('login');
+});
+// Route::get('protected', function () {
+// 	dump(session()->all());
+	
+// 	if(! auth()->check()) {
+// 		return '누구세요';
+// 	}
+// 	return '어서오세요 '.  auth()->user()->name;
+// });
+
+Route::get('protected', [
+    'middleware' => 'auth',
+    'uses' => function () {
+        dump(session()->all());
+        return '어서 오세요' . auth()->user()->name;
+    },
+]);
+
+Route::get('auth/logout', function () {
+	auth()->logout();
+	
+	return '또 봐요~';
+});
+
+// code: 라라벨 내장 사용자 인증 사용하기 
+// php artisan make:auth
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

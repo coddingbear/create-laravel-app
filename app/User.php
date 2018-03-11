@@ -14,7 +14,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
+    protected $fillable = [ // 대량 할당이 가능한 열
         'name', 'email', 'password',
     ];
 
@@ -23,7 +23,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
+    protected $hidden = [ // 조회 쿼리에서 제외할 열
         'password', 'remember_token',
     ];
 }
