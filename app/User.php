@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [ // 조회 쿼리에서 제외할 열
         'password', 'remember_token',
     ];
+	
+	public function articles()
+	{
+		return $this->hasMany(Article::class);  // 나는 여러개의 articles를 가지고 있습니다.
+	}
 }
