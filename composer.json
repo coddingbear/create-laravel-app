@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "laravel/larv5app",
+    "description": "라라벨로 배우는 실전 웹 프로그래밍",
+    "keywords": ["php","framework", "laravel","web programming"],
     "license": "MIT",
     "type": "project",
     "require": {

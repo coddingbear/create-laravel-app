@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+		Schema::defaultStringLength(191); // InnoDB 엔진에서 Long text 유니크 키 설정 오류에 대한 문제점 해결 방법
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -30,6 +31,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+		//Schema::enableForeignKeyConstraints();
         Schema::dropIfExists('users');
+		//Schema::disableForeignKeyConstraints();
     }
 }
