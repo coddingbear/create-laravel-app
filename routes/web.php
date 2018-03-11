@@ -28,8 +28,10 @@
 
 // code: view() 함수 이용 방법
 Route::get('/', function () {
+	$items = ['apple', 'banana', 'peach'];
 	return view('welcome', [
 		'name' =>'김춘추',
-		'greeting' => '안녕하세요?'
+		'greeting' => '안녕하세요?',
+		'items'=> $items
 	]);
 });
