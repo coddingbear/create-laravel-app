@@ -64,6 +64,11 @@ return [
 		'address' => 'john@example.com',
 		'name' => 'Admin'
 	],
+//  16.4 테스트 환경용 설정
+	'to' => [
+		'address' => 'yours@example.com',
+		'name' => 'Tester'
+	],
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
