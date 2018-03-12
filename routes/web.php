@@ -18,9 +18,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 // code: RESTful 리소스 컨트롤러 사용
 Route::resource('articles', 'ArticlesController');
 
+// 이미지에 대한 응답
+Route::get('docs/images/{image?}', 'DocsController@image')
+	->where('image', '[\pL-\pN\._-]+-img-[0-9]{2}.png');
+
 Route::get('docs/{file?}', 'DocsController@show');
-// Route::get('docs/{file?}', function ($file = null) {
-// 	$text = (new App\Documentation)->get($file);
-	
-// 	return app(ParsedownExtra::class)->text($text);
-//});
+
