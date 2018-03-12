@@ -18,8 +18,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 // code: RESTful 리소스 컨트롤러 사용
 Route::resource('articles', 'ArticlesController');
 
-Route::get('docs/{file?}', function ($file = null) {
-	$text = (new App\Documentation)->get($file);
+Route::get('docs/{file?}', 'DocsController@show');
+// Route::get('docs/{file?}', function ($file = null) {
+// 	$text = (new App\Documentation)->get($file);
 	
-	return app(ParsedownExtra::class)->text($text);
-});
+// 	return app(ParsedownExtra::class)->text($text);
+//});
