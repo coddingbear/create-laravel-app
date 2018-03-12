@@ -26,6 +26,9 @@ class User extends Authenticatable
     protected $hidden = [ // 조회 쿼리에서 제외할 열
         'password', 'remember_token',
     ];
+
+//	14.14 라라벨 내장 이벤트 채널	이용
+	protected $dates = [ 'last_login' ];
 	
 	public function articles()
 	{

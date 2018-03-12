@@ -14,18 +14,9 @@ class ArticlesController extends Controller
     public function index()
     {
         //return __METHOD__ . '은(는) Article 컬렉션을 조회합니다.';
-		//$articles = \App\Article::get(); // N+1쿼리 발생
-		
-		// N+1 쿼리  문제 해결 with()메서드 사용
-		//$articles = \App\Article::with('user')->get(); 
-		
-		// 지연 로드 (Lazy load)
-		//$articles = \App\Article::get();
-		/* user() 와 관계 없는 다른 로직 수행 */
-		//$articles->load('user');
 		
 		//페이지네이터
-		$articles = \App\Article::latest()->paginate(5); 
+		$articles = \App\Article::latest()->paginate(10); 
 		// latest() 날자를 역순으로 정렬, orderBy('created_at', 'desc;)와 같다.
 		$articles->load('user');
 		return view('articles.index', compact('articles'));
@@ -52,34 +43,27 @@ class ArticlesController extends Controller
 	public function store(\App\Http\Requests\ArticlesRequest $request)
     {
         //return __METHOD__ . '은(는) 사용자의 입력한 폼 데이터로 새로운 Article 컬렉션을 만듭니다.';
-		// $rules = [
-		// 	'title' => ['required'],
-		// 	'content' => ['required', 'min:10']
-		// ];
-		// $messages = [
-		// 	'title.required' => '제목은 필수 입력 항목입니다.',
-		// 	'content.required' => '본문은 필수 입력 항목입니다.',
-		// 	'content.min' => '본문은 최소 :min 글자 이상이 필요합니다.'
-		// ]; // app/Http/Requests/ArticlesRequest.php 에 정의한다.
-		
-		//$validator = \Validator::make($request->all(), $rules, $messages);
-		
-		// if($validator->fails()) {
-		// 	return back()->withErrors($validator)
-		// 				 ->withInput();
-		// }
-		
-		// 트레이트의 메서드 이용하여 위코드가 간결하게 됨.
-		//$this->validate($request, $rules, $messages);  //따로 리퀘스트 정의로  생략
-		
 		$article = \App\User::find(1)->articles()
 									->create($request->all());
 		if(! $article) {
 			return back()->with('flash_message', '글이 저장되지 않았습니다.')
 						->withInput();
 		}
+//		14.1 이벤트 시스템 작동 기본 원리
+		// dump('이벤트를 던집니다.');
+		// event('article.created', [ $article ]); // event(이벤트 이름, 데이타)
+		// dump('이벤트를 던졌습니다.');
+		
+//		14.7 이벤트 클래스 이용
+		// dump('이벤트를 던집니다.');
+		// event(new \App\Events\ArticleCreated($article));
+		// dump('이벤트를 던졌습니다.');
+		
+//		14.9 실용적인 이벤트 시스템
+		event(new \App\Events\ArticlesEvent($article));
+		
 		return redirect(route('articles.index'))
-				->with('flash_message', '작성하신 글이 저장되었습니다.');
+			->with('flash_message', '작성하신 글이 저장되었습니다.');
     }
 
     /**
