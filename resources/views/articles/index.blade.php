@@ -18,7 +18,7 @@
 				</li>
 			@endforelse
 		</ul>
-		
+		{{-- dd('reached') --}}
 		@if($articles->count())
 			<div class="d-flex justify-content-center mt-4">
 				{!! $articles->render() !!}

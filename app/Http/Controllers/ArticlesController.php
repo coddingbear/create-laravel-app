@@ -19,6 +19,9 @@ class ArticlesController extends Controller
 		$articles = \App\Article::latest()->paginate(10); 
 		// latest() 날자를 역순으로 정렬, orderBy('created_at', 'desc;)와 같다.
 		$articles->load('user');
+		
+//		15.8 뷰 디버깅 
+		// dd(view('articles.index', compact('articles'))->render());
 		return view('articles.index', compact('articles'));
     }
 
@@ -74,7 +77,14 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-        return __METHOD__ . '은(는) 다음 기본 키를 가진 Article 모델을 조회합니다. :' . $id;
+//		15.1 전역 예외 처리기
+		// echo $foo;
+		// return __METHOD__ . '은(는) 다음 기본 키를 가진 Article 모델을 조회합니다. :' . $id;
+// 		15.2 실용적인 예외 처리
+		$article = \App\Article::findOrFail($id);
+// 		15.4 디버깅 방법 : dd() 도우미 함수
+		// dd($article);
+		return $article->toArray();
     }
 
     /**
