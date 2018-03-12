@@ -52,15 +52,6 @@ class ArticlesController extends Controller
 			return back()->with('flash_message', '글이 저장되지 않았습니다.')
 						->withInput();
 		}
-//		14.1 이벤트 시스템 작동 기본 원리
-		// dump('이벤트를 던집니다.');
-		// event('article.created', [ $article ]); // event(이벤트 이름, 데이타)
-		// dump('이벤트를 던졌습니다.');
-		
-//		14.7 이벤트 클래스 이용
-		// dump('이벤트를 던집니다.');
-		// event(new \App\Events\ArticleCreated($article));
-		// dump('이벤트를 던졌습니다.');
 		
 //		14.9 실용적인 이벤트 시스템
 		event(new \App\Events\ArticlesEvent($article));
@@ -77,14 +68,11 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-//		15.1 전역 예외 처리기
-		// echo $foo;
 		// return __METHOD__ . '은(는) 다음 기본 키를 가진 Article 모델을 조회합니다. :' . $id;
-// 		15.2 실용적인 예외 처리
 		$article = \App\Article::findOrFail($id);
-// 		15.4 디버깅 방법 : dd() 도우미 함수
-		// dd($article);
-		return $article->toArray();
+// 		17.3 컴포넌트 사용
+		debug($article->toArray());
+		return view('articles.show', compact('article'));
     }
 
     /**

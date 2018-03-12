@@ -7,7 +7,7 @@
 		<ul class="list-group">
 			@forelse($articles as $article)
 				<li class="list-group-item list-group-action">
-					<a href="#" class="d-flex align-items-center">
+					<a href="{{ route('articles.show', $article->id) }}" class="d-flex align-items-center">
 						<h4 class="mb-1 mr-2">{{ $article->title }}</h4>	
 						<small>by {{ $article->user->name }}</small>
 					</a>

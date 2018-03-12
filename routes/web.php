@@ -18,32 +18,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 // code: RESTful 리소스 컨트롤러 사용
 Route::resource('articles', 'ArticlesController');
 
-// 16.1 메일 메시지 만들기
-Route::get('mail', function () {
-	$article = App\Article::with('user')->find(1);
-	
-//  16.6 메일 보내기 : 복잡한 메세지 만들기
-	// return Mail::send(
-	// 	'emails.articles.created', 
-	// 	compact('article'),
-	// 	function($message) use ($article) {
-	// 		$message->from('yours1@gmail.com, 'User Name');
-	// 		$message->to('yours2@domain.com', 'yours3@domain.com');
-	// 		$message->subject('새글이 등록되었습니다 -'. $article->title);
-	// 		$message->cc('yours4@domain.com');
-	// 		$message->attach(storage_path('elephant.png'));
-	// 	}
-	// );
-//	16.7 텍스트 메일
-	return Mail::send(
-		['text' => 'emails.articles.created-text'],
-		compact('article'),
-		function ($message) use ($article) {
-			$message->from('yours1@daum.net');
-			$message->to('yours2@gmail.com');
-			$message->subject('새 글이 등록되었습니다 - '. $article->title);
-		}
-	);
+// 17.1 컴포넌트 사용하기
+Route::get('markdown', function () {
+	$text =<<<EOT
+# 마크다운 예제 1
+
+이 문서는 [마크다운][1]으로 썼습니다. 화면에 HTML로 변환되어 출력됩니다.
+		
+## 순서 없는 목록
+
+- 첫 번째 항목
+- 두 번째 항목[^1]
+		
+ [1]: http://daringfireball.net/projects/markdown
+ [^1]: http://google.com	
+EOT;
+	return app(ParsedownExtra::class)->text($text);
 });
 
 // DEBUG: DB 쿼리문 수행 확인
